@@ -22,10 +22,12 @@ Reservation.destroy_all
 end
 
 10.times do
+  re = "/\(([0-8][0-9])(9[0-5])[0-9]"
   City.create!(name: Faker::Address.city,
-   zip_code: Faker::Address.zip_code
+   zip_code: Faker::Base.regexify(re),
   )
-end
+end 
+
 50.times do
   Listing.create!(
     available_beds: rand(1..6),
@@ -45,6 +47,7 @@ end
   city_id: City.all.sample.id
   )
 end
+
 5.times do
   Reservation.create!(start_date: Faker::Date.forward(days: 14),
   end_date: Faker::Date.forward(days: 15),
